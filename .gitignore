@@ -1,0 +1,14 @@
+# Environment variables (contains real API keys)
+.env
+
+# OS generated files
+.DS_Store
+Thumbs.db
+
+# IDE / editor files
+.vscode/
+.idea/
+*.sublime-*
+
+# Logs
+*.log
