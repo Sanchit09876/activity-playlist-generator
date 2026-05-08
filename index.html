@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Activity -> PlayList Generator</title>
+    <link rel="stylesheet" href="css/style.css" />
+  </head>
+  <body>
+    <div class="container">
+      <h1>Activity &rightarrow; PlayList Generator</h1>
+      <p>What do you feel like doing?</p>
+
+      <div class="activity-input">
+        <input
+          type="text"
+          id="activityInput"
+          placeholder="e.g., go to the gym, relax, code..."
+          required
+        />
+
+        <button id="generateBtn">Generate Playlist</button>
+        <button id="randomBtn">Random Activity</button>
+      </div>
+      
+      <div id="activityHolder"></div>
+      <div id="result"></div>
+    </div>
+
+    <script src="js/main.js"></script>
+  </body>
+</html>

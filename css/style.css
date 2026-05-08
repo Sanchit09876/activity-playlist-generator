@@ -1,0 +1,28 @@
+* {
+  margin: 0px;
+  padding: 0px;
+
+  box-sizing: border-box;
+}
+
+body {
+  font-family: system-ui, sans-serif;
+  background: #121212;
+  color: #eee;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+}
+
+.container {
+  max-width: 800px;
+  text-align: center;
+}
+
+
+#activityHolder{
+  border: 1px solid white;
+  height: auto;
+  min-height: 10vh;
+}
