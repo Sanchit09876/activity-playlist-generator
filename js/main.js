@@ -1,20 +1,17 @@
 document.addEventListener("DOMContentLoaded", () => {
-  // get references to the HTML elements we need
   const activityInput = document.getElementById("activityInput");
   const result = document.getElementById("result");
   const randomBtn = document.getElementById("randomBtn");
 
-  // add a click event listener to the "Random Activity" button
   randomBtn.addEventListener("click", async () => {
     randomBtn.setAttribute("disabled", "true");
-    // Show a loading message while fetching
+
     result.innerHTML = "<p>Generating Random Activity...</p>";
 
     try {
       // fetch a random activity from our PHP backend (api proxy)
       const response = await fetch("php/ajax/random_activity.php");
 
-      // if the HTTP status is not OK (e.g., 404, 500), throw an error
       if (!response.ok) {
         throw new Error(`HTTP error! Status: ${response.status}`);
       }
@@ -33,24 +30,53 @@ document.addEventListener("DOMContentLoaded", () => {
         }, 1000);
 
         randomBtn.removeAttribute("disabled");
-      }
-      // if the response contains an 'error' field, show it in the result div
-      else if (data.error) {
+      } else if (data.error) {
         result.innerHTML = `<p>${data.error}</p>`;
 
         randomBtn.removeAttribute("disabled");
-      }
-      // otherwise, show a generic "no activity" message
-      else {
+      } else {
         result.innerHTML = "<p>No activity received!</p>";
 
         randomBtn.removeAttribute("disabled");
       }
     } catch (error) {
-      // if any error occurs (network, parsing, etc.), show an error message
       result.innerHTML = "<p>Error Occured when generating activity!</p>";
 
       randomBtn.removeAttribute("disabled");
+    }
+  });
+
+  const generateBtn = document.getElementById("generateBtn");
+
+  generateBtn.addEventListener("click", async () => {
+    const activity = activityInput.value.trim();
+    if (!activity) return;
+
+    try {
+      const response = await fetch("php/ajax/generate_playlist.php", {
+        method: "POST",
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+        body: "activity=" + encodeURIComponent(activity),
+      });
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+
+      const data = await response.json();
+
+      if (data.playlist && Array.isArray(data.playlist)) {
+        result.innerHTML = data.playlist
+          .map((song) => `<p>${song.title} — ${song.artist}</p>`)
+          .join("");
+      } else if (data.error) {
+        result.innerHTML = `<p>Error: ${data.error}</p>`;
+      } else {
+        result.innerHTML = "<p>No playlist generated</p>";
+      }
+    } catch (error) {
+      console.error(error);
+      result.innerHTML = "<p>❌ Network error or server problem.</p>";
     }
   });
 });
