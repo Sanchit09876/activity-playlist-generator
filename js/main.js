@@ -1,12 +1,13 @@
 document.addEventListener("DOMContentLoaded", () => {
   const activityInput = document.getElementById("activityInput");
+  const activityHolder = document.getElementById("activityHolder");
   const result = document.getElementById("result");
   const randomBtn = document.getElementById("randomBtn");
 
   randomBtn.addEventListener("click", async () => {
     randomBtn.setAttribute("disabled", "true");
 
-    result.innerHTML = "<p>Generating Random Activity...</p>";
+    activityHolder.innerHTML = "<p>Generating Random Activity...</p>";
 
     try {
       // fetch a random activity from our PHP backend (api proxy)
@@ -23,24 +24,25 @@ document.addEventListener("DOMContentLoaded", () => {
       if (data.activity) {
         activityInput.value = `${data.activity}`;
 
-        result.innerHTML = "<p>Activity Generated</p>";
+        activityHolder.innerHTML = "<p>Activity Generated</p>";
 
         setTimeout(() => {
-          result.innerHTML = "";
+          activityHolder.innerHTML = "";
         }, 1000);
 
         randomBtn.removeAttribute("disabled");
       } else if (data.error) {
-        result.innerHTML = `<p>${data.error}</p>`;
+        activityHolder.innerHTML = `<p>${data.error}</p>`;
 
-        randomBtn.removeAttribute("disabled");
+        activityHolder.removeAttribute("disabled");
       } else {
-        result.innerHTML = "<p>No activity received!</p>";
+        activityHolder.innerHTML = "<p>No activity received!</p>";
 
         randomBtn.removeAttribute("disabled");
       }
     } catch (error) {
-      result.innerHTML = "<p>Error Occured when generating activity!</p>";
+      activityHolder.innerHTML =
+        "<p>Error Occured when generating activity!</p>";
 
       randomBtn.removeAttribute("disabled");
     }
@@ -66,9 +68,27 @@ document.addEventListener("DOMContentLoaded", () => {
       const data = await response.json();
 
       if (data.playlist && Array.isArray(data.playlist)) {
-        result.innerHTML = data.playlist
-          .map((song) => `<p>${song.title} — ${song.artist}</p>`)
-          .join("");
+        result.innerHTML = ""; // Clear any previous results before showing new ones
+
+        for (const song of data.playlist) {
+          const itunesResult = await fetch("php/ajax/itunes_search.php", {
+            method: "POST",
+            headers: { "Content-Type": "application/x-www-form-urlencoded" },
+            // Encode the song data into URL format: "title=Highway+to+Hell&artist=AC%2FDC"
+            body: `title=${encodeURIComponent(song.title)}&artist=${encodeURIComponent(song.artist)}`,
+          });
+
+          const itunesData = await itunesResult.json();
+
+          if (itunesData.preview_url) {
+            result.innerHTML += `<div>
+            <p>${song.title} = ${song.artist}</p>
+            <audio controls src="${itunesData.preview_url}"></audio>
+            </div>`;
+          } else {
+            result.innerHTML += `<p>${song.title} - ${song.artist} (preview unavailable)</p>`;
+          }
+        }
       } else if (data.error) {
         result.innerHTML = `<p>Error: ${data.error}</p>`;
       } else {
