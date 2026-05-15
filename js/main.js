@@ -7,6 +7,7 @@ document.addEventListener("DOMContentLoaded", () => {
   randomBtn.addEventListener("click", async () => {
     randomBtn.setAttribute("disabled", "true");
 
+    activityHolder.style.display = "block";
     activityHolder.innerHTML = "<p>Generating Random Activity...</p>";
 
     try {
@@ -24,17 +25,19 @@ document.addEventListener("DOMContentLoaded", () => {
       if (data.activity) {
         activityInput.value = `${data.activity}`;
 
-        activityHolder.innerHTML = "<p>Activity Generated</p>";
+        activityHolder.innerHTML = `<p>Your Activity</p>
+        <p>${data.activity}</p>`;
 
-        setTimeout(() => {
-          activityHolder.innerHTML = "";
-        }, 1000);
+        // setTimeout(() => {
+        //   activityHolder.innerHTML = "";
+        //   activityHolder.style.display = "none";
+        // }, 2000);
 
         randomBtn.removeAttribute("disabled");
       } else if (data.error) {
         activityHolder.innerHTML = `<p>${data.error}</p>`;
 
-        activityHolder.removeAttribute("disabled");
+        randomBtn.removeAttribute("disabled");
       } else {
         activityHolder.innerHTML = "<p>No activity received!</p>";
 
@@ -51,8 +54,13 @@ document.addEventListener("DOMContentLoaded", () => {
   const generateBtn = document.getElementById("generateBtn");
 
   generateBtn.addEventListener("click", async () => {
+    generateBtn.setAttribute("disabled", true);
+
     const activity = activityInput.value.trim();
-    if (!activity) return;
+    if (!activity) {
+      generateBtn.removeAttribute("disabled");
+      return;
+    }
 
     try {
       const response = await fetch("php/ajax/generate_playlist.php", {
@@ -70,33 +78,68 @@ document.addEventListener("DOMContentLoaded", () => {
       if (data.playlist && Array.isArray(data.playlist)) {
         result.innerHTML = ""; // Clear any previous results before showing new ones
 
-        for (const song of data.playlist) {
+        // for (const song of data.playlist) {
+        //   const itunesResult = await fetch("php/ajax/itunes_search.php", {
+        //     method: "POST",
+        //     headers: { "Content-Type": "application/x-www-form-urlencoded" },
+        //     // Encode the song data into URL format: "title=Highway+to+Hell&artist=AC%2FDC"
+        //     body: `title=${encodeURIComponent(song.title)}&artist=${encodeURIComponent(song.artist)}`,
+        //   });
+
+        //   const itunesData = await itunesResult.json();
+
+        // if (itunesData.preview_url) {
+        //   result.innerHTML += `<div class="song-row">
+        //   <p>${song.title} = ${song.artist}</p>
+        //   <audio controls src="${itunesData.preview_url}"></audio>
+        //   </div>`;
+        // } else {
+        //   result.innerHTML += `<p>${song.title} - ${song.artist} (preview unavailable)</p>`;
+        // }
+
+        for (let i = 0; i < data.playlist.length; i++) {
+          const song = data.playlist[i];
+
           const itunesResult = await fetch("php/ajax/itunes_search.php", {
             method: "POST",
             headers: { "Content-Type": "application/x-www-form-urlencoded" },
-            // Encode the song data into URL format: "title=Highway+to+Hell&artist=AC%2FDC"
             body: `title=${encodeURIComponent(song.title)}&artist=${encodeURIComponent(song.artist)}`,
           });
 
           const itunesData = await itunesResult.json();
+          console.log(itunesData);
 
-          if (itunesData.preview_url) {
-            result.innerHTML += `<div>
-            <p>${song.title} = ${song.artist}</p>
-            <audio controls src="${itunesData.preview_url}"></audio>
+          const artHTML = itunesData.artwork_url
+            ? `<img src = "${itunesData.artwork_url}" alt="cover" class = "album-art">`
+            : `<div class="album-art"></div>`;
+
+          const previewHTML = itunesData.preview_url
+            ? `<audio controls src = "${itunesData.preview_url}"></audio>`
+            : `<span class="no-preview">Preview Unavailable</span>`;
+
+          result.innerHTML += `
+            <div class="song-row">
+                <div class="song-num">${i + 1}</div>
+                ${artHTML}
+                  <div class="song-info">
+                    <p>${song.title}</p>
+                    <p>${song.artist}</p>
+                  </div>
+              <div class="preview-area">${previewHTML}</div>
             </div>`;
-          } else {
-            result.innerHTML += `<p>${song.title} - ${song.artist} (preview unavailable)</p>`;
-          }
         }
+        generateBtn.removeAttribute("disabled");
       } else if (data.error) {
         result.innerHTML = `<p>Error: ${data.error}</p>`;
+        generateBtn.removeAttribute("disabled");
       } else {
         result.innerHTML = "<p>No playlist generated</p>";
+        generateBtn.removeAttribute("disabled");
       }
     } catch (error) {
       console.error(error);
       result.innerHTML = "<p>❌ Network error or server problem.</p>";
+      generateBtn.removeAttribute("disabled");
     }
   });
 });

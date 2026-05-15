@@ -4,27 +4,42 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Activity -> PlayList Generator</title>
+
+    <link rel="stylesheet" href="css/variable.css" />
     <link rel="stylesheet" href="css/style.css" />
   </head>
   <body>
-    <div class="container">
+    <div class="heading">
+      <img
+        src="assets/images/music_disk.png"
+        class="music-disc"
+        alt="music disk image"
+      />
       <h1>Activity &rightarrow; PlayList Generator</h1>
-      <p>What do you feel like doing?</p>
+    </div>
 
+    <div class="container">
       <div class="activity-input">
-        <input
-          type="text"
-          id="activityInput"
-          placeholder="e.g., go to the gym, relax, code..."
-          required
-        />
+        <p>What do you feel like doing?</p>
+        <div class="activity-input-field">
+          <input
+            type="text"
+            id="activityInput"
+            placeholder="e.g., go to the gym, relax, code..."
+            required
+          />
+        </div>
 
-        <button id="generateBtn">Generate Playlist</button>
-        <button id="randomBtn">Random Activity</button>
+        <div class="buttons">
+          <button id="generateBtn" class="generate-btn">
+            Generate Playlist
+          </button>
+          <button id="randomBtn" class="random-btn">Random Activity</button>
+        </div>
       </div>
-      
+
       <div id="activityHolder"></div>
-      <div id="result"></div>
+      <div class="result hidden" id="result"></div>
     </div>
 
     <script src="js/main.js"></script>

@@ -1,0 +1,26 @@
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  /* Primary Colors */
+  --primary-color: #1db954; /* Spotify green - main accent */
+  --primary-color-hover: #1ed760; /* Brighter green - hover state */
+  --primary-color-active: #17a349; /* Darker green - active/clicked */
+
+  /* Background Colors */
+  --bg-color: #0a0a0a;
+  --bg-card: #121212;
+  --bg-input: #1a1a1a;
+
+  /* Border Colors */
+  --border-color: #282828; /* Subtle borders */
+  --border-focus-color: #1db954; /* Input focus border */
+
+  /* Text Colors */
+  --text-primary-color: #ffffff; /* Main text */
+  --text-secondary-color: #b3b3b3; /* Subtitles, artist names */
+  --text-muted-color: #535353; /* Placeholder text */
+}

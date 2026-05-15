@@ -17,13 +17,35 @@ curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 $response = curl_exec($ch);
 curl_close($ch);
 
+if (!$response) {
+    echo json_encode(['error' => 'cURL failed - no response']);
+    exit();
+}
+
 $data = json_decode($response, true);
 
-$preview = $data['results'][0]['previewUrl'] ?? null;
+if (!$data) {
+    echo json_encode(['error' => 'JSON decode failed', 'raw' => $response]);
+    exit();
+}
 
-if(!$preview){
+if (empty($data['results'])) {
+    echo json_encode(['error' => 'No iTunes results', 'query' => "$title $artist", 'resultCount' => $data['resultCount'] ?? 0]);
+    exit();
+}
+
+$result = $data['results'][0];
+
+$preview = $result['previewUrl'] ?? null;
+$artwork = $result['artworkUrl100'] ?? null;
+
+
+if (!$preview && !$artwork) {
     echo json_encode(['error' => 'Preview not found']);
     exit();
 }
 
-echo json_encode(['preview_url' => $preview]);
+echo json_encode([
+    'preview_url' => $preview,
+    'artwork_url' => $artwork,
+]);

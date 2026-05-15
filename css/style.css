@@ -7,22 +7,157 @@
 
 body {
   font-family: system-ui, sans-serif;
-  background: #121212;
-  color: #eee;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  background: var(--bg-color);
+  color: var(--text-primary-color);
+
   min-height: 100vh;
 }
 
-.container {
-  max-width: 800px;
-  text-align: center;
+.heading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
 }
 
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  align-items: center;
+  justify-content: center;
 
-#activityHolder{
-  border: 1px solid white;
+  padding: 10px;
+  /* border: 1px solid white; */
+}
+
+.music-disc {
+  width: 280px;
+  height: 280px;
+  filter: drop-shadow(0 0 5px rgba(100, 255, 0, 0.9)) /* was 6px  */
+    drop-shadow(0 0 16px rgba(100, 255, 0, 0.6)) /* was 20px */
+    drop-shadow(0 0 40px rgba(100, 255, 0, 0.35)) /* was 50px */
+    drop-shadow(0 0 80px rgba(100, 255, 0, 0.15)); /* was 100px */
+}
+
+.activity-input {
+  width: 550px;
+  padding: 15px 30px;
+
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+
+  border-radius: 10px;
+
+  background-color: var(--bg-card);
+  border: 2px solid var(--border-color);
+}
+
+.activity-input input {
+  width: 100%;
+  padding: 10px;
+  border: none;
+  border-radius: 8px;
+
+  background-color: var(--bg-input);
+  color: var(--text-primary-color);
+}
+.activity-input input::placeholder {
+  color: var(--text-secondary-color);
+}
+.activity-input input:focus {
+  outline: none;
+
+  border: 1px solid var(--border-focus-color);
+  color: var(--text-primary-color);
+}
+
+.buttons {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  gap: 10px;
+  width: 100%;
+}
+
+.buttons button {
+  width: 100%;
+  padding: 10px;
+  border-radius: 8px;
+  border: none;
+}
+
+.buttons .generate-btn {
+  background-color: var(--primary-color);
+}
+.buttons .generate-btn:hover {
+  background-color: var(--primary-color-hover);
+}
+.buttons .generate-btn:active {
+  background-color: var(--primary-color-active);
+}
+
+.buttons .random-btn {
+  background-color: transparent;
+  border: 1px solid var(--primary-color);
+  color: var(--text-primary-color);
+}
+
+#activityHolder {
   height: auto;
-  min-height: 10vh;
+  min-height: 8vh;
+  width: 800px;
+
+  text-align: center;
+
+  display: none;
+}
+
+#result {
+  height: auto;
+  width: 650px;
+  /* border: 1px solid white; */
+}
+
+.song-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px;
+  background: #1a1a1a;
+  border-radius: 8px;
+  margin-bottom: 8px;
+}
+
+.song-num {
+  width: 24px;
+  text-align: center;
+  color: #1db954;
+}
+
+.album-art {
+  width: 50px;
+  height: 50px;
+  border-radius: 6px;
+  object-fit: cover;
+  background-color: #333;
+  flex-shrink: 0;
+}
+
+.song-info {
+  flex: 1;
+  min-width: 0px; /* prevents overflow */
+}
+
+.song-info p {
+  margin: 0px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.preview-area audio {
+  width: 250px; /* fixed width so all players are same size */
+  flex-shrink: 0;
 }
