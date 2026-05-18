@@ -4,11 +4,24 @@ document.addEventListener("DOMContentLoaded", () => {
   const result = document.getElementById("result");
   const randomBtn = document.getElementById("randomBtn");
 
+  activityInput.addEventListener("input", () => {
+    const currentText = activityInput.value.trim();
+
+    if(currentText === ""){
+      activityHolder.style.display = "none";
+      return;
+    }
+    activityHolder.style.display = "block";
+
+    activityHolder.innerHTML = `<p class="activity-label">Your Activity</p>
+        <p class="activity-result"><i class="fa-solid fa-person-running"></i>  ${currentText}</p>`;
+  });
+
   randomBtn.addEventListener("click", async () => {
     randomBtn.setAttribute("disabled", "true");
 
     activityHolder.style.display = "block";
-    activityHolder.innerHTML = "<p>Generating Random Activity...</p>";
+    activityHolder.innerHTML = `<p class="activity-loading">Generating Random Activity</p>`;
 
     try {
       // fetch a random activity from our PHP backend (api proxy)
@@ -25,8 +38,8 @@ document.addEventListener("DOMContentLoaded", () => {
       if (data.activity) {
         activityInput.value = `${data.activity}`;
 
-        activityHolder.innerHTML = `<p>Your Activity</p>
-        <p>${data.activity}</p>`;
+        activityHolder.innerHTML = `<p class="activity-label">Your Activity</p>
+        <p class="activity-result"><i class="fa-solid fa-person-running"></i>  ${data.activity}</p>`;
 
         // setTimeout(() => {
         //   activityHolder.innerHTML = "";

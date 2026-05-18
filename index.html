@@ -7,6 +7,10 @@
 
     <link rel="stylesheet" href="css/variable.css" />
     <link rel="stylesheet" href="css/style.css" />
+    <script
+      src="https://kit.fontawesome.com/746a97fbea.js"
+      crossorigin="anonymous"
+    ></script>
   </head>
   <body>
     <div class="heading">
@@ -22,19 +26,26 @@
       <div class="activity-input">
         <p>What do you feel like doing?</p>
         <div class="activity-input-field">
-          <input
-            type="text"
-            id="activityInput"
-            placeholder="e.g., go to the gym, relax, code..."
-            required
-          />
+          <div class="input-wrapper">
+            <i class="fa-solid fa-magnifying-glass"></i>
+            <input
+              type="text"
+              id="activityInput"
+              placeholder="e.g., go to the gym, relax, code..."
+              required
+            />
+          </div>
         </div>
 
         <div class="buttons">
+          <button id="randomBtn" class="random-btn">
+            <i class="fa-solid fa-dice"></i>
+            Random Activity
+          </button>
           <button id="generateBtn" class="generate-btn">
+            <i class="fa-solid fa-music"></i>
             Generate Playlist
           </button>
-          <button id="randomBtn" class="random-btn">Random Activity</button>
         </div>
       </div>
 
