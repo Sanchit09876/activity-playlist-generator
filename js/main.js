@@ -7,7 +7,7 @@ document.addEventListener("DOMContentLoaded", () => {
   activityInput.addEventListener("input", () => {
     const currentText = activityInput.value.trim();
 
-    if(currentText === ""){
+    if (currentText === "") {
       activityHolder.style.display = "none";
       return;
     }
@@ -111,6 +111,19 @@ document.addEventListener("DOMContentLoaded", () => {
         // }
 
         for (let i = 0; i < data.playlist.length; i++) {
+          result.innerHTML += `
+            <div class="song-row skeleton-row">
+              <div class="song-num skeleton-box"></div>
+              <div class="album-art skeleton-box"></div>
+              <div class="song-info">
+                <div class="skeleton-box skeleton-title"></div>
+                <div class="skeleton-box skeleton-artist"></div>
+              </div>
+              <div class="skeleton-box skeleton-audio"></div>
+            </div>`;
+        }
+
+        for (let i = 0; i < data.playlist.length; i++) {
           const song = data.playlist[i];
 
           const itunesResult = await fetch("php/ajax/itunes_search.php", {
@@ -130,13 +143,13 @@ document.addEventListener("DOMContentLoaded", () => {
             ? `<audio controls src = "${itunesData.preview_url}"></audio>`
             : `<span class="no-preview">Preview Unavailable</span>`;
 
-          result.innerHTML += `
+          result.children[i].outerHTML = `
             <div class="song-row">
                 <div class="song-num">${i + 1}</div>
                 ${artHTML}
                   <div class="song-info">
-                    <p>${song.title}</p>
-                    <p>${song.artist}</p>
+                    <p class="song-title">${song.title}</p>
+                    <p class="song-artist">${song.artist}</p>
                   </div>
               <div class="preview-area">${previewHTML}</div>
             </div>`;
