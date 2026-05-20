@@ -64,6 +64,15 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 
+  //Random Button Icon animation
+  const diceIcon = document.querySelector(".fa-dice");
+  randomBtn.addEventListener("mouseover", () => {
+    diceIcon.classList.add("fa-bounce");
+  });
+  randomBtn.addEventListener("mouseout", () => {
+    diceIcon.classList.remove("fa-bounce");
+  });
+
   const generateBtn = document.getElementById("generateBtn");
 
   generateBtn.addEventListener("click", async () => {
@@ -147,7 +156,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
           const itunesIcon = itunesData.track_url
             ? `<a href="${itunesData.track_url}" target="_blank" class="itunes-song-link"><i class="fa-brands fa-itunes"></i></a>`
-            : ''; //if in backend it doesn't find preview of song, it doen't display anything
+            : ""; //if in backend it doesn't find preview of song, it doen't display anything
 
           result.children[i].outerHTML = `
             <div class="song-row">
@@ -165,7 +174,7 @@ document.addEventListener("DOMContentLoaded", () => {
           const currentIcon = result.children[i].querySelector(".fa-itunes");
 
           if (!currentIcon) {
-            continue;  
+            continue;
           }
 
           currentIcon.addEventListener("mouseover", () =>
