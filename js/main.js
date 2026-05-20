@@ -199,4 +199,13 @@ document.addEventListener("DOMContentLoaded", () => {
       generateBtn.removeAttribute("disabled");
     }
   });
+
+  //generate button animation
+  const musicIcon = document.querySelector(".fa-music");
+  generateBtn.addEventListener('mouseover', ()=>{
+    musicIcon.classList.add('fa-beat');
+  })
+  generateBtn.addEventListener('mouseout', ()=>{
+    musicIcon.classList.remove('fa-beat');
+  })
 });

@@ -174,12 +174,12 @@ h1{
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 5px;
+  gap: 10px;
 }
 
 .fa-dice,
 .fa-music {
-  font-size: 15px;
+  font-size: 1.2rem;
 }
 
 .buttons .generate-btn {
