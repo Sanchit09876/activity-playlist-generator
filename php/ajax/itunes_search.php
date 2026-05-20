@@ -34,13 +34,15 @@ if (empty($data['results'])) {
     exit();
 }
 
+$fullData = $data['results'];
 $result = $data['results'][0];
 
 $preview = $result['previewUrl'] ?? null;
 $artwork = $result['artworkUrl100'] ?? null;
+$trackUrl = $result['trackViewUrl'] ?? null;
 
 
-if (!$preview && !$artwork) {
+if (!$preview && !$trackUrl) {
     echo json_encode(['error' => 'Preview not found']);
     exit();
 }
@@ -48,4 +50,6 @@ if (!$preview && !$artwork) {
 echo json_encode([
     'preview_url' => $preview,
     'artwork_url' => $artwork,
+    'track_url' => $trackUrl,
+    'full_data' => $fullData,
 ]);

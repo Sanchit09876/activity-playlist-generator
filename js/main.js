@@ -120,6 +120,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 <div class="skeleton-box skeleton-artist"></div>
               </div>
               <div class="skeleton-box skeleton-audio"></div>
+              <div class="skeleton-box skeleton-icon"></div>
             </div>`;
         }
 
@@ -133,7 +134,8 @@ document.addEventListener("DOMContentLoaded", () => {
           });
 
           const itunesData = await itunesResult.json();
-          console.log(itunesData);
+          // console.log(itunesData);
+          console.log(itunesData.full_data);
 
           const artHTML = itunesData.artwork_url
             ? `<img src = "${itunesData.artwork_url}" alt="cover" class = "album-art">`
@@ -142,6 +144,10 @@ document.addEventListener("DOMContentLoaded", () => {
           const previewHTML = itunesData.preview_url
             ? `<audio controls src = "${itunesData.preview_url}"></audio>`
             : `<span class="no-preview">Preview Unavailable</span>`;
+
+          const itunesIcon = itunesData.track_url
+            ? `<a href="${itunesData.track_url}" target="_blank" class="itunes-song-link"><i class="fa-brands fa-itunes"></i></a>`
+            : ''; //if in backend it doesn't find preview of song, it doen't display anything
 
           result.children[i].outerHTML = `
             <div class="song-row">
@@ -152,8 +158,24 @@ document.addEventListener("DOMContentLoaded", () => {
                     <p class="song-artist">${song.artist}</p>
                   </div>
               <div class="preview-area">${previewHTML}</div>
+              ${itunesIcon}
             </div>`;
+
+          //Itunes logo hover animation
+          const currentIcon = result.children[i].querySelector(".fa-itunes");
+
+          if (!currentIcon) {
+            continue;  
+          }
+
+          currentIcon.addEventListener("mouseover", () =>
+            currentIcon.classList.add("fa-beat"),
+          );
+          currentIcon.addEventListener("mouseout", () =>
+            currentIcon.classList.remove("fa-beat"),
+          );
         }
+
         generateBtn.removeAttribute("disabled");
       } else if (data.error) {
         result.innerHTML = `<p>Error: ${data.error}</p>`;

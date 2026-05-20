@@ -29,7 +29,8 @@ body {
   height: 100%;
   object-fit: contain;
   opacity: 0.6; /* so it doesn't overpower the disc */
-  top: 10%;  
+  top:15%; 
+  left: 50%;
   z-index: 0;
 
   filter: drop-shadow(0 0 3px rgba(100, 255, 0, 0.7))
@@ -61,7 +62,7 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 20px;
+  gap: 10px;
 }
 
 h1{
@@ -300,6 +301,10 @@ h1{
   flex-shrink: 0;
 }
 
+.no-preview{
+  color: var(--text-secondary-color);
+}
+
 .skeleton-box {
   background: linear-gradient(90deg, #1a1a1a 25%, #2a2a2a 50%, #1a1a1a 75%);
   background-size: 200% 100%;
@@ -337,4 +342,13 @@ h1{
   width: 250px;
   height: 54px;
   border-radius: 20px;
+}
+
+.itunes-song-link{
+  text-decoration: none;
+  color: white;
+}
+
+.fa-itunes{
+  font-size: 1.75rem;
 }
