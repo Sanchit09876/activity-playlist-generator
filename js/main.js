@@ -136,15 +136,42 @@ document.addEventListener("DOMContentLoaded", () => {
         for (let i = 0; i < data.playlist.length; i++) {
           const song = data.playlist[i];
 
-          const itunesResult = await fetch("php/ajax/itunes_search.php", {
-            method: "POST",
-            headers: { "Content-Type": "application/x-www-form-urlencoded" },
-            body: `title=${encodeURIComponent(song.title)}&artist=${encodeURIComponent(song.artist)}`,
-          });
+          // const itunesResult = await fetch("php/ajax/itunes_search.php", {
+          //   method: "POST",
+          //   headers: { "Content-Type": "application/x-www-form-urlencoded" },
+          //   body: `title=${encodeURIComponent(song.title)}&artist=${encodeURIComponent(song.artist)}`,
+          // });
 
-          const itunesData = await itunesResult.json();
+          // const youtubeResult = await fetch("php/ajax/youtube_search.php", {
+          //   method: "POST",
+          //   headers: { "Content-Type": "application/x-www-form-urlencoded" },
+          //   body: `title=${encodeURIComponent(song.title)}&artist=${encodeURIComponent(song.artist)}`,
+          // });
+
+          // const itunesData = await itunesResult.json();
           // console.log(itunesData);
-          console.log(itunesData.full_data);
+          // console.log(itunesData.full_data);
+
+          // const youtubeData = await youtubeResult.json();
+          // console.log(youtubeData.youtube_url);
+
+          const [itunesResult, youtubeResult] = await Promise.all([
+            fetch("php/ajax/itunes_search.php", {
+              method: "POST",
+              headers: { "Content-Type": "application/x-www-form-urlencoded" },
+              body: `title=${encodeURIComponent(song.title)}&artist=${encodeURIComponent(song.artist)}`,
+            }),
+            fetch("php/ajax/youtube_search.php", {
+              method: "POST",
+              headers: { "Content-Type": "application/x-www-form-urlencoded" },
+              body: `title=${encodeURIComponent(song.title)}&artist=${encodeURIComponent(song.artist)}`,
+            }),
+          ]);
+
+          const [itunesData, youtubeData] = await Promise.all([
+            itunesResult.json(),
+            youtubeResult.json(),
+          ]);
 
           const artHTML = itunesData.artwork_url
             ? `<img src = "${itunesData.artwork_url}" alt="cover" class = "album-art">`
@@ -158,6 +185,10 @@ document.addEventListener("DOMContentLoaded", () => {
             ? `<a href="${itunesData.track_url}" target="_blank" class="itunes-song-link"><i class="fa-brands fa-itunes"></i></a>`
             : ""; //if in backend it doesn't find preview of song, it doen't display anything
 
+          const youtubeURL = youtubeData.youtube_url
+            ? `<a href="${youtubeData.youtube_url}" target="_blank" class="youtube-song-link"><i class="fa-brands fa-youtube"></i></a>`
+            : "";
+
           result.children[i].outerHTML = `
             <div class="song-row">
                 <div class="song-num">${i + 1}</div>
@@ -168,6 +199,7 @@ document.addEventListener("DOMContentLoaded", () => {
                   </div>
               <div class="preview-area">${previewHTML}</div>
               ${itunesIcon}
+              ${youtubeURL}
             </div>`;
 
           //Itunes logo hover animation
@@ -202,10 +234,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
   //generate button animation
   const musicIcon = document.querySelector(".fa-music");
-  generateBtn.addEventListener('mouseover', ()=>{
-    musicIcon.classList.add('fa-beat');
-  })
-  generateBtn.addEventListener('mouseout', ()=>{
-    musicIcon.classList.remove('fa-beat');
-  })
+  generateBtn.addEventListener("mouseover", () => {
+    musicIcon.classList.add("fa-beat");
+  });
+  generateBtn.addEventListener("mouseout", () => {
+    musicIcon.classList.remove("fa-beat");
+  });
 });

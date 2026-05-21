@@ -34,7 +34,7 @@ if (empty($data['results'])) {
     exit();
 }
 
-$fullData = $data['results'];
+// $fullData = $data['results'];
 $result = $data['results'][0];
 
 $preview = $result['previewUrl'] ?? null;
@@ -51,5 +51,5 @@ echo json_encode([
     'preview_url' => $preview,
     'artwork_url' => $artwork,
     'track_url' => $trackUrl,
-    'full_data' => $fullData,
+    // 'full_data' => $fullData,
 ]);
