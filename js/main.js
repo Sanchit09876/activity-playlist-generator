@@ -7,7 +7,9 @@ document.addEventListener("DOMContentLoaded", () => {
   const slider = document.getElementById("slider");
   const sliderValue = document.getElementById("sliderValue");
 
-  sliderValue.textContent = slider.value;
+  const songCountText = document.querySelector(".song-count");
+
+  // sliderValue.textContent = slider.value;
   slider.addEventListener("input", () => {
     const thumbWidth = 35;
     const sliderWidth = slider.offsetWidth;
@@ -17,6 +19,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
     sliderValue.textContent = slider.value;
     sliderValue.style.left = `calc(${percentage * 100}% + ${offset}px)`;
+
+    songCountText.textContent = slider.value;
   });
   slider.dispatchEvent(new Event("input")); //Manually fires the input event once on page loadF
 
@@ -209,7 +213,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
           const youtubeURL = youtubeData.youtube_url
             ? `<a href="${youtubeData.youtube_url}" target="_blank" class="youtube-song-link"><i class="fa-brands fa-youtube"></i></a>`
-            : "";
+            : `<div class="youtube-placeholder"></div>`; //fallback container to preserve symmetry if icon doesn't show
 
           result.children[i].outerHTML = `
             <div class="song-row">
@@ -225,17 +229,29 @@ document.addEventListener("DOMContentLoaded", () => {
             </div>`;
 
           //Itunes logo hover animation
-          const currentIcon = result.children[i].querySelector(".fa-itunes");
+          const currentItunesIcon =
+            result.children[i].querySelector(".fa-itunes");
 
-          if (!currentIcon) {
-            continue;
-          }
+          if (!currentItunesIcon) continue; //skip if icon doesn't load or error occurs (Preview unavailable)
 
-          currentIcon.addEventListener("mouseover", () =>
-            currentIcon.classList.add("fa-beat"),
+          currentItunesIcon.addEventListener("mouseover", () =>
+            currentItunesIcon.classList.add("fa-beat"),
           );
-          currentIcon.addEventListener("mouseout", () =>
-            currentIcon.classList.remove("fa-beat"),
+          currentItunesIcon.addEventListener("mouseout", () =>
+            currentItunesIcon.classList.remove("fa-beat"),
+          );
+
+          //Youtube logo hover animation
+          const currentYoutubeIcon =
+            result.children[i].querySelector(".fa-youtube");
+
+          if (!currentYoutubeIcon) continue;
+
+          currentYoutubeIcon.addEventListener("mouseover", () =>
+            currentYoutubeIcon.classList.add("fa-beat"),
+          );
+          currentYoutubeIcon.addEventListener("mouseout", () =>
+            currentYoutubeIcon.classList.remove("fa-beat"),
           );
         }
 
