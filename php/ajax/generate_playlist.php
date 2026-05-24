@@ -8,6 +8,8 @@ if (empty($activity)) {
     exit();
 }
 
+$songCount = intval($_POST['count'] ?? 5);
+
 $apiKey = getenv('GROQ_API_KEY');
 if (!$apiKey) {
     echo json_encode(['error' => 'API Key not configured']);
@@ -17,7 +19,7 @@ if (!$apiKey) {
 $messages = [
     [
         'role' => 'system',
-        'content' => 'You are a music playlist generator. The user will describe an activity. You MUST reply ONLY with a valid JSON array of exactly 5 objects. Each object MUST have exactly two keys: "title" and "artist". STRICT RULES: Only include real, published music songs with a known artist. Do NOT include podcasts, news segments, YouTube shorts, interviews, audiobooks, sound effects, or any non-music content. Each "title" must be an actual song title and each "artist" must be the real performing artist or band name. Example: [{"title":"Song Name","artist":"Artist Name"}]. No extra text, no markdown, no explanation, no other content.'
+        'content' => 'You are a music playlist generator. The user will describe an activity. You MUST reply ONLY with a valid JSON array of exactly ' . $songCount . ' objects.  Each object MUST have exactly two keys: "title" and "artist". STRICT RULES: Only include real, published music songs with a known artist. Do NOT include podcasts, news segments, YouTube shorts, interviews, audiobooks, sound effects, or any non-music content. Each "title" must be an actual song title and each "artist" must be the real performing artist or band name. Example: [{"title":"Song Name","artist":"Artist Name"}]. No extra text, no markdown, no explanation, no other content.'
     ],
     [
         'role' => 'user',

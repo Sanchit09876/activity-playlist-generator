@@ -40,10 +40,29 @@
           </div>
         </div>
 
+        <div class="slider-container">
+          <div class="slider-heading">
+            <p>Number of Songs</p>
+            <span
+              ><p class="song-count">5</p>
+              songs</span
+            >
+          </div>
+
+          <div class="slider">
+            <div class="slider-wrapper">
+              <input type="range" min="5" max="10" value="5" id="slider" />
+              <div class="slider-value" id="sliderValue"></div>
+            </div>
+          </div>
+          <div class="ticks" id="tickContainer"></div>
+          <p class="slider-label">Choose how many songs you want in your palylist.</p>
+        </div>
+
         <div class="buttons">
           <button id="randomBtn" class="random-btn">
             <!-- <i class="fa-solid fa-dice"></i> -->
-             <i class="fa-solid fa-dice"></i>
+            <i class="fa-solid fa-dice"></i>
             Random Activity
           </button>
           <button id="generateBtn" class="generate-btn">

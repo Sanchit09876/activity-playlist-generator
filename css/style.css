@@ -24,12 +24,12 @@ body {
 }
 
 .song-beat {
-  transform: scale(2.2);
+  transform: scale(2);
   position: absolute;
   height: 100%;
   object-fit: contain;
   opacity: 0.6; /* so it doesn't overpower the disc */
-  top:15%; 
+  top: 15%;
   left: 50%;
   z-index: 0;
 
@@ -65,7 +65,7 @@ body {
   gap: 10px;
 }
 
-h1{
+h1 {
   letter-spacing: 1px;
   background: linear-gradient(90deg, #64ff00 20%, #ffffff 60%);
   -webkit-background-clip: text;
@@ -135,7 +135,7 @@ h1{
   pointer-events: none;
 }
 
-.activity-input input {
+.activity-input #activityInput {
   width: 100%;
   padding: 10px 10px 10px 36px;
   border: 2px solid var(--border-color);
@@ -144,10 +144,10 @@ h1{
   background-color: var(--bg-input);
   color: var(--text-primary-color);
 }
-.activity-input input::placeholder {
+.activity-input #activityInput::placeholder {
   color: var(--text-secondary-color);
 }
-.activity-input input:focus {
+.activity-input #activityInput:focus {
   outline: none;
 
   border: 2px solid var(--border-focus-color);
@@ -301,7 +301,7 @@ h1{
   flex-shrink: 0;
 }
 
-.no-preview{
+.no-preview {
   color: var(--text-secondary-color);
 }
 
@@ -344,11 +344,101 @@ h1{
   border-radius: 20px;
 }
 
-.itunes-song-link{
+.itunes-song-link {
   text-decoration: none;
   color: white;
 }
 
-.fa-itunes{
+.fa-itunes {
   font-size: 1.75rem;
+}
+
+.slider-container {
+  width: 100%;
+  height: 130px;
+  padding: 10px;
+
+  border-radius: 10px;
+
+  background-color: var(--bg-card);
+  border: 2px solid var(--border-color);
+}
+
+.slider-heading {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+.song-count {
+  display: inline-flex;
+}
+
+.slider {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.slider-wrapper {
+  width: 100%;
+  position: relative;
+}
+
+#slider {
+  width: 100%;
+
+  appearance: none;
+  height: 4px;
+
+  outline: none;
+  border-radius: 3px;
+}
+#slider::-webkit-slider-thumb {
+  appearance: none;
+  width: 35px;
+  height: 35px;
+  background-color: white;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.slider-value {
+  position: absolute;
+  color: gray;
+  font-weight: bold;
+  /* top: 4px;
+  left: 12px; */
+
+  pointer-events: none;
+
+  top: 50%;
+  margin-top: -17.5px;
+  
+  transform: translateX(-50%);
+
+  width: 35px;
+  height: 35px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 14px;
+}
+
+.ticks {
+  margin: 8px auto;
+  width: 93%;
+  font-size: 10px;
+  display: flex;
+
+  justify-content: space-between;
+
+  color: var(--text-secondary-color);
+}
+
+.slider-label {
+  text-align: center;
+  color: var(--text-secondary-color);
+  font-size: 12px;
 }

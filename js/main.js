@@ -4,6 +4,22 @@ document.addEventListener("DOMContentLoaded", () => {
   const result = document.getElementById("result");
   const randomBtn = document.getElementById("randomBtn");
 
+  const slider = document.getElementById("slider");
+  const sliderValue = document.getElementById("sliderValue");
+
+  sliderValue.textContent = slider.value;
+  slider.addEventListener("input", () => {
+    const thumbWidth = 35;
+    const sliderWidth = slider.offsetWidth;
+    const percentage = (slider.value - slider.min) / (slider.max - slider.min);
+
+    const offset = 17.5 - percentage * 35;
+
+    sliderValue.textContent = slider.value;
+    sliderValue.style.left = `calc(${percentage * 100}% + ${offset}px)`;
+  });
+  slider.dispatchEvent(new Event("input")); //Manually fires the input event once on page loadF
+
   activityInput.addEventListener("input", () => {
     const currentText = activityInput.value.trim();
 
@@ -88,7 +104,11 @@ document.addEventListener("DOMContentLoaded", () => {
       const response = await fetch("php/ajax/generate_playlist.php", {
         method: "POST",
         headers: { "Content-Type": "application/x-www-form-urlencoded" },
-        body: "activity=" + encodeURIComponent(activity),
+        body:
+          "activity=" +
+          encodeURIComponent(activity) +
+          "&count=" +
+          encodeURIComponent(slider.value),
       });
 
       if (!response.ok) {
@@ -173,6 +193,8 @@ document.addEventListener("DOMContentLoaded", () => {
             youtubeResult.json(),
           ]);
 
+          // console.log(itunesData);
+          console.log(youtubeData);
           const artHTML = itunesData.artwork_url
             ? `<img src = "${itunesData.artwork_url}" alt="cover" class = "album-art">`
             : `<div class="album-art"></div>`;
@@ -240,4 +262,13 @@ document.addEventListener("DOMContentLoaded", () => {
   generateBtn.addEventListener("mouseout", () => {
     musicIcon.classList.remove("fa-beat");
   });
+
+  //Display ticks to navigate slider
+  const tickContainer = document.getElementById("tickContainer");
+  for (let i = 0; i <= 5; i++) {
+    const span = document.createElement("span");
+    span.textContent = "|";
+
+    tickContainer.appendChild(span);
+  }
 });

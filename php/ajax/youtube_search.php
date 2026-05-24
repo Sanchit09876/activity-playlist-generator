@@ -12,8 +12,7 @@ if (empty($title) || empty($artist)) {
 
 $apiKey = getenv('YOUTUBE_API_KEY');
 if (!$apiKey) {
-    // echo json_encode(['error' => 'API Key not configured']);
-    echo json_encode(['error' => 'API key not found', 'env_check' => $_ENV]);
+    echo json_encode(['error' => 'API Key not configured']);
     exit();
 }
 
