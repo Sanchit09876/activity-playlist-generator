@@ -27,12 +27,7 @@ $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
 curl_close($ch);
 
 if ($httpCode !== 200) {
-    // echo json_encode(['error' => 'YouTube API error']);
-    echo json_encode([
-        'error' => 'YouTube API error',
-        'http_code' => $httpCode,
-        'response' => $response
-    ]);
+    echo json_encode(['error' => 'YouTube API error']);
     exit();
 }
 
