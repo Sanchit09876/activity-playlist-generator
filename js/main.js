@@ -11,18 +11,26 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // sliderValue.textContent = slider.value;
   slider.addEventListener("input", () => {
-    const thumbWidth = 35;
+    // const thumbWidth = parseFloat(
+    //   getComputedStyle(document.documentElement).getPropertyValue(
+    //     "--thumb-measurement",
+    //   )
+    // );
+
+    const thumbWidth = sliderValue.offsetWidth;
+    
     const sliderWidth = slider.offsetWidth;
     const percentage = (slider.value - slider.min) / (slider.max - slider.min);
 
-    const offset = 17.5 - percentage * 35;
+    // const offset = 17.5 - percentage * 35;
+    const offset = thumbWidth / 2 - percentage * thumbWidth;
 
     sliderValue.textContent = slider.value;
     sliderValue.style.left = `calc(${percentage * 100}% + ${offset}px)`;
 
     songCountText.textContent = slider.value;
   });
-  slider.dispatchEvent(new Event("input")); //Manually fires the input event once on page loadF
+  slider.dispatchEvent(new Event("input")); //Manually fires the input event once on page load
 
   activityInput.addEventListener("input", () => {
     const currentText = activityInput.value.trim();

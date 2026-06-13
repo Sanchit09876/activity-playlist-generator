@@ -131,6 +131,11 @@ h1 {
   border: 2px solid var(--border-color);
 }
 
+.activity-question {
+  font-size: clamp(0.9rem, 1vw, 1.2rem);
+  text-wrap: nowrap;
+}
+
 .activity-input .input-wrapper {
   position: relative;
   display: flex;
@@ -157,6 +162,7 @@ h1 {
 }
 .activity-input #activityInput::placeholder {
   color: var(--text-secondary-color);
+  font-size: clamp(0.7rem, 1.5vw, 1rem);
 }
 .activity-input #activityInput:focus {
   outline: none;
@@ -374,7 +380,7 @@ h1 {
 
 .slider-container {
   width: 100%;
-  height: 130px;
+  min-height: 130px;
   padding: 10px;
 
   border-radius: 10px;
@@ -386,7 +392,23 @@ h1 {
 .slider-heading {
   display: flex;
   justify-content: space-between;
-  margin-bottom: 10px;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.slider-container .slider-heading p {
+  font-size: clamp(0.75rem, 1.5vw, 1.2rem);
+}
+
+.number-label {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.fa-compact-disc {
+  font-size: clamp(20px, 1.5vw, 25px);
+  color: var(--primary-color-hover);
 }
 
 .song-count {
@@ -399,6 +421,10 @@ h1 {
   color: var(--border-focus-color);
 
   box-shadow: 0px 0px 4px #39ff14;
+}
+
+.slider-heading span{
+  font-size: clamp(0.8rem, 1.5vw, 1.2rem);
 }
 
 .slider {
@@ -423,8 +449,11 @@ h1 {
 }
 #slider::-webkit-slider-thumb {
   appearance: none;
-  width: 35px;
-  height: 35px;
+  /* width: 35px;
+  height: 35px; */
+
+  width: var(--thumb-measurement);
+  height: var(--thumb-measurement);
   background-color: white;
   border-radius: 50%;
   cursor: pointer;
@@ -440,17 +469,18 @@ h1 {
   pointer-events: none;
 
   top: 50%;
-  margin-top: -17.5px;
+  /* margin-top: -17.5px; */
+  margin-top: calc(var(--thumb-measurement) / -2.5);
 
   transform: translateX(-50%);
 
-  width: 35px;
-  height: 35px;
+  width: var(--thumb-measurement);
+  height: var(--thumb-measurement);
 
   display: flex;
   justify-content: center;
   align-items: center;
-  font-size: 14px;
+  font-size: clamp(14px, 1.5vw, 18px);
 }
 
 .ticks {
@@ -468,6 +498,8 @@ h1 {
   text-align: center;
   color: var(--text-secondary-color);
   font-size: 12px;
+
+  /* overflow-wrap: break-word;  */
 }
 
 @media (max-width: 600px) {
@@ -482,6 +514,11 @@ h1 {
   h1 {
     font-size: clamp(0.8rem, 3.5vw, 1.2rem);
   }
+
+  /* #slider::-webkit-slider-thumb {
+    width: 25px;
+    height: 25px;
+  } */
 }
 
 @media (max-width: 480px) {
@@ -489,3 +526,15 @@ h1 {
     top: 21%;
   }
 }
+
+@media (max-width: 525px) {
+  .buttons {
+    flex-direction: column;
+  }
+}
+
+/* @media (max-width: 400px) {
+  .slider-container .slider-heading p {
+    font-size: 0.75rem;
+  }
+} */

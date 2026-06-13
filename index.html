@@ -27,14 +27,14 @@
 
     <div class="container">
       <div class="activity-input">
-        <p>What do you feel like doing?</p>
+        <p class="activity-question">What do you feel like doing?</p>
         <div class="activity-input-field">
           <div class="input-wrapper">
             <i class="fa-solid fa-magnifying-glass"></i>
             <input
               type="text"
               id="activityInput"
-              placeholder="e.g., go to the gym, relax, code..."
+              placeholder="e.g., go to the gym, code..."
               required
             />
           </div>
@@ -42,9 +42,14 @@
 
         <div class="slider-container">
           <div class="slider-heading">
-            <p>Number of Songs</p>
-            <span><p class="song-count"></p>
-              songs</span>
+            <div class="number-label">
+              <i class="fa-solid fa-compact-disc fa-spin"></i>
+              <p>Number of Songs</p>
+            </div>
+            <span
+              ><p class="song-count"></p>
+              songs</span
+            >
           </div>
 
           <div class="slider">
@@ -54,7 +59,9 @@
             </div>
           </div>
           <div class="ticks" id="tickContainer"></div>
-          <p class="slider-label">Choose how many songs you want in your playlist.</p>
+          <p class="slider-label">
+            Choose how many songs you want in your playlist.
+          </p>
         </div>
 
         <div class="buttons">

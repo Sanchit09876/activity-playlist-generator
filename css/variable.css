@@ -23,4 +23,6 @@
   --text-primary-color: #ffffff; /* Main text */
   --text-secondary-color: #b3b3b3; /* Subtitles, artist names */
   --text-muted-color: #535353; /* Placeholder text */
+
+  --thumb-measurement: clamp(26px, 3.5vw, 35px);
 }
