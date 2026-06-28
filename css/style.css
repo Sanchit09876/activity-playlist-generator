@@ -5,13 +5,18 @@
   box-sizing: border-box;
 }
 
+html{
+  overflow-y: auto;
+}
+
 body {
   font-family: system-ui, sans-serif;
   background: var(--bg-color);
   color: var(--text-primary-color);
 
   min-height: 100vh;
-  overflow-x: hidden;
+  
+  overflow-y: auto;
 }
 
 .heading-container {
@@ -21,7 +26,7 @@ body {
   justify-content: center;
   align-items: center;
 
-  padding-top: 50px;
+  padding-top: 35px;
 }
 
 .song-beat {
@@ -221,7 +226,8 @@ h1 {
   /* width: 800px; */
   padding-bottom: 20px;
 
-  text-align: center;
+  justify-content: center;
+  align-items: center;
 
   display: none;
 }
@@ -231,9 +237,22 @@ h1 {
   content: "✨";
 }
 
+.activity-section {
+  padding-top: 8px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+}
+
 #activityHolder .activity-label {
-  width: auto;
-  padding-bottom: 8px;
+  text-transform: uppercase;
+  font-weight: bold;
+  color: var(--text-secondary-color);
+  letter-spacing: 1.5px;
+
+  border-left: 3px solid var(--primary-color);
+  padding-left: 8px;
 }
 
 #activityHolder .activity-result {
@@ -397,7 +416,7 @@ h1 {
 }
 
 .slider-container .slider-heading p {
-  font-size: clamp(0.75rem, 1.5vw, 1.2rem);
+  font-size: clamp(0.75rem, 1.5vw, 1rem);
 }
 
 .number-label {
@@ -423,8 +442,8 @@ h1 {
   box-shadow: 0px 0px 4px #39ff14;
 }
 
-.slider-heading span{
-  font-size: clamp(0.8rem, 1.5vw, 1.2rem);
+.slider-heading span {
+  font-size: clamp(0.8rem, 1.5vw, 1rem);
 }
 
 .slider {
@@ -533,8 +552,8 @@ h1 {
   }
 }
 
-/* @media (max-width: 400px) {
-  .slider-container .slider-heading p {
-    font-size: 0.75rem;
+@media (max-width: 430px) {
+  .slider-container .slider-heading .number-label p {
+    font-size: 10px;
   }
-} */
+}

@@ -11,12 +11,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // sliderValue.textContent = slider.value;
   slider.addEventListener("input", () => {
-    // const thumbWidth = parseFloat(
-    //   getComputedStyle(document.documentElement).getPropertyValue(
-    //     "--thumb-measurement",
-    //   )
-    // );
-
     const thumbWidth = sliderValue.offsetWidth;
     
     const sliderWidth = slider.offsetWidth;
@@ -41,8 +35,11 @@ document.addEventListener("DOMContentLoaded", () => {
     }
     activityHolder.style.display = "block";
 
-    activityHolder.innerHTML = `<p class="activity-label">Your Activity</p>
-        <p class="activity-result"><i class="fa-solid fa-person-running"></i>  ${currentText}</p>`;
+    activityHolder.innerHTML = `
+    <div class="activity-section">
+      <p class="activity-label"><i class="fa-solid fa-bolt"></i> Your Activity</p>
+      <p class="activity-result"><i class="fa-solid fa-person-running"></i>  ${currentText}</p>
+    </div>`;
   });
 
   randomBtn.addEventListener("click", async () => {
@@ -66,8 +63,11 @@ document.addEventListener("DOMContentLoaded", () => {
       if (data.activity) {
         activityInput.value = `${data.activity}`;
 
-        activityHolder.innerHTML = `<p class="activity-label">Your Activity</p>
-        <p class="activity-result"><i class="fa-solid fa-person-running"></i>  ${data.activity}</p>`;
+        activityHolder.innerHTML = `
+        <div class="activity-section">
+          <p class="activity-label"><i class="fa-solid fa-bolt"></i> Your Activity</p>
+          <p class="activity-result"><i class="fa-solid fa-person-running"></i>  ${data.activity}</p>
+        </div>`;
 
         // setTimeout(() => {
         //   activityHolder.innerHTML = "";
