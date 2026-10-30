@@ -10,7 +10,8 @@ if (empty($activity)) {
 
 $songCount = intval($_POST['count'] ?? 5);
 
-$apiKey = getenv('GROQ_API_KEY');
+//$apiKey = getenv('GROQ_API_KEY');
+$apiKey = getenv('GROQ_API_KEY') ?: ($_ENV['GROQ_API_KEY'] ?? null);
 if (!$apiKey) {
     echo json_encode(['error' => 'API Key not configured']);
     exit();
@@ -28,11 +29,15 @@ $messages = [
 ];
 
 $data = [
-    'model' => 'llama-3.1-8b-instant',
+    //'model' => 'llama-3.1-8b-instant',
+    'model' => 'openai/gpt-oss-20b',
 
     'messages' => $messages,
     'temperature' => 0.7, // Controls randomness (0 = deterministic, 1 = creative).
-    'max_tokens' => 250
+    //'max_tokens' => 250
+    'max_tokens'=>500,
+    'include_reasoning' => false,
+    'reasoning_effort' => 'low',
 ];
 
 $groqAPIurl = 'https://api.groq.com/openai/v1/chat/completions';
@@ -53,7 +58,9 @@ curl_close($ch);
 
 if ($httpCode !== 200) {
     error_log("GORQ API error: HTTP $httpCode, response: $response");
-    echo json_encode(['error' => 'AI service temporarily unavailable']);
+    //echo json_encode(['error' => 'AI service temporarily unavailable']);
+    //file_put_contents(__DIR__ . '/../../debug.txt', "HTTP: $httpCode\n\nResponse:\n$response");
+    echo json_encode(['error' => 'AI service temporarily unavailable', 'debug_code' => $httpCode, 'debug_response' => $response]);
     exit();
 }
 
@@ -67,6 +74,7 @@ $playlist = json_decode($content, true);
 
 if (!is_array($playlist) || count($playlist) < 1) {
     echo json_encode(['error' => 'AI returned an invalid playlist']);
+    //file_put_contents(__DIR__ . '/../../debug.txt', "Raw content:\n$content");
     exit();
 }
 
